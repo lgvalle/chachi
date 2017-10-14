@@ -15,7 +15,10 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import xyz.lgvalle.chachi.guardian.Article;
 
@@ -70,8 +73,16 @@ public class ArticleDetailFragment extends Fragment {
             public void onChanged(@Nullable Article article) {
                 if (article != null) {
                     appBarLayout.setTitle(article.getTitle());
+                    ImageView articleImageView = rootView.findViewById(R.id.article_image);
+                    loadImage(article, articleImageView);
                     ((TextView) rootView.findViewById(R.id.article_detail)).setText(article.getDescription());
                 }
+            }
+
+            private void loadImage(@Nullable Article article, ImageView articleImageView) {
+                Picasso.with(getActivity())
+                        .load(article.getImage())
+                        .into(articleImageView);
             }
         });
     }

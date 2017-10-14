@@ -22,16 +22,12 @@ public class ArticleViewModel extends ViewModel {
 
     public ArticleViewModel(TheGuardianDataSource dataSource) {
         this.dataSource = dataSource;
-
-        Log.d(TAG, "Create ViewModel");
-
     }
 
     LiveData<List<Article>> articles() {
         articles = Transformations.map(dataSource.edition(), new Function<Edition, List<Article>>() {
             @Override
             public List<Article> apply(Edition edition) {
-                Log.d(TAG, "Transform Result");
                 return edition.getItems();
             }
         });

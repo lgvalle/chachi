@@ -4,7 +4,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -32,8 +35,9 @@ class SimpleItemRecyclerViewAdapter
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         final Article item = values.get(position);
-        holder.mIdView.setText(item.getCreator());
-        holder.mContentView.setText(item.getTitle());
+        holder.title.setText(item.getTitle());
+
+        loadThumbnail(holder, item);
 
         holder.itemView.setTag(item);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -42,6 +46,12 @@ class SimpleItemRecyclerViewAdapter
                 articleClickListener.onArticleSelected(item);
             }
         });
+    }
+
+    private void loadThumbnail(ViewHolder holder, Article item) {
+        Picasso.with(holder.thumbnail.getContext())
+                .load(item.getThumbnail())
+                .into(holder.thumbnail);
     }
 
     @Override
@@ -55,13 +65,13 @@ class SimpleItemRecyclerViewAdapter
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        final TextView mIdView;
-        final TextView mContentView;
+        final TextView title;
+        final ImageView thumbnail;
 
         ViewHolder(View view) {
             super(view);
-            mIdView = view.findViewById(R.id.id_text);
-            mContentView = view.findViewById(R.id.content);
+            thumbnail = view.findViewById(R.id.article_thumbnail);
+            title = view.findViewById(R.id.article_title);
         }
     }
 }
