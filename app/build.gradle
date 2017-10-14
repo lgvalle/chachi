@@ -21,10 +21,23 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    compile 'com.android.support:appcompat-v7:26.+'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+
+    compile 'com.android.support:design:' + rootProject.supportLibVersion
+    compile 'com.android.support:cardview-v7:' + rootProject.supportLibVersion
+    compile 'com.android.support:recyclerview-v7:' + rootProject.supportLibVersion
+    compile 'android.arch.lifecycle:extensions:' + rootProject.archLifecycleVersion
+    annotationProcessor "android.arch.lifecycle:compiler:" + rootProject.archLifecycleVersion
+
     testCompile 'junit:junit:4.12'
+
+    // Testing-only dependencies
+    androidTestCompile 'com.android.support.test:runner:' + rootProject.runnerVersion
+    androidTestCompile 'com.android.support.test:rules:' + rootProject.rulesVersion
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:' + rootProject.espressoVersion
+
+    androidTestCompile 'com.android.support.test.espresso:espresso-contrib:' + rootProject.espressoVersion
+
+    // Force usage of dependencies in the test app, since it is internally used by the runner module.
+    androidTestCompile 'com.android.support:design:' + rootProject.supportLibVersion;
+    androidTestCompile 'com.android.support:recyclerview-v7:' + rootProject.supportLibVersion;
 }
