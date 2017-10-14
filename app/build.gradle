@@ -12,7 +12,16 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+
+
+        debug {
+            buildConfigField "String", "ENDPOINT", endpoint_debug
+            debuggable true
+        }
+
         release {
+            buildConfigField "String", "ENDPOINT", endpoint_release
+
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -27,10 +36,13 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:' + rootProject.supportLibVersion
     compile 'android.arch.lifecycle:extensions:' + rootProject.archLifecycleVersion
     annotationProcessor "android.arch.lifecycle:compiler:" + rootProject.archLifecycleVersion
-
-    testCompile 'junit:junit:4.12'
+    compile 'com.squareup.retrofit2:retrofit:' + rootProject.retrofitVersion
+    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'
+    //compile 'com.squareup.retrofit2:converter-gson:1.0.0'
 
     // Testing-only dependencies
+    testCompile 'junit:junit:4.12'
     androidTestCompile 'com.android.support.test:runner:' + rootProject.runnerVersion
     androidTestCompile 'com.android.support.test:rules:' + rootProject.rulesVersion
     androidTestCompile 'com.android.support.test.espresso:espresso-core:' + rootProject.espressoVersion

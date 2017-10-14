@@ -8,14 +8,16 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import xyz.lgvalle.chachi.guardian.Article;
+
 class SimpleItemRecyclerViewAdapter
         extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
 
-    private List<DummyArticleRepository.DummyItem> values;
+    private List<Article> values;
     private ArticleListFragment.ArticleClickListener articleClickListener;
 
 
-    SimpleItemRecyclerViewAdapter(List<DummyArticleRepository.DummyItem> items,
+    SimpleItemRecyclerViewAdapter(List<Article> items,
                                   ArticleListFragment.ArticleClickListener articleClickListener) {
         values = items;
         this.articleClickListener = articleClickListener;
@@ -29,9 +31,9 @@ class SimpleItemRecyclerViewAdapter
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        final DummyArticleRepository.DummyItem item = values.get(position);
-        holder.mIdView.setText(item.id);
-        holder.mContentView.setText(item.content);
+        final Article item = values.get(position);
+        holder.mIdView.setText(item.getCreator());
+        holder.mContentView.setText(item.getTitle());
 
         holder.itemView.setTag(item);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -47,7 +49,7 @@ class SimpleItemRecyclerViewAdapter
         return values.size();
     }
 
-    void setArticleList(List<DummyArticleRepository.DummyItem> articleList) {
+    void setArticleList(List<Article> articleList) {
         this.values = articleList;
         notifyDataSetChanged();
     }

@@ -31,4 +31,5 @@ ext {
     rulesVersion = "1.0.1"
     espressoVersion = "3.0.1"
     archLifecycleVersion = "1.0.0-beta1"
+    retrofitVersion = "2.3.0"
 }

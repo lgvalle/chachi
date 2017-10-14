@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import xyz.lgvalle.chachi.guardian.TheGuardianDataSource;
+
 /**
  * Helper class for providing sample content for user interfaces created by
  * Android template wizards.
@@ -45,6 +47,7 @@ public class DummyArticleRepository {
     }
 
     public List<DummyItem> getItems() {
+        new TheGuardianDataSource().fetch();
         // Add some sample items.
         for (int i = 1; i <= COUNT; i++) {
             addItem(createDummyItem(i));

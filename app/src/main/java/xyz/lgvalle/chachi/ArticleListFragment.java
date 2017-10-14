@@ -13,6 +13,9 @@ import android.view.ViewGroup;
 import java.util.Collections;
 import java.util.List;
 
+import xyz.lgvalle.chachi.guardian.Article;
+import xyz.lgvalle.chachi.guardian.TheGuardianDataSource;
+
 public class ArticleListFragment extends Fragment {
 
     public static final String TAG = ArticleListFragment.class.getSimpleName();
@@ -26,7 +29,7 @@ public class ArticleListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_article_list, container, false);
 
         articleNavigator = new ArticleNavigator(getActivity());
-        adapter = new SimpleItemRecyclerViewAdapter(Collections.<DummyArticleRepository.DummyItem>emptyList(), articleClickListener);
+        adapter = new SimpleItemRecyclerViewAdapter(Collections.<Article>emptyList(), articleClickListener);
 
         RecyclerView recyclerView = view.findViewById(R.id.article_list);
         recyclerView.setAdapter(adapter);
@@ -38,12 +41,12 @@ public class ArticleListFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        ViewModelFactory viewModelFactory = new ViewModelFactory(new DummyArticleRepository());
+        ViewModelFactory viewModelFactory = new ViewModelFactory(new TheGuardianDataSource());
         articleViewModel = ViewModelProviders.of(getActivity(), viewModelFactory).get(ArticleViewModel.class);
 
-        articleViewModel.dummyItems().observe(getActivity(), new Observer<List<DummyArticleRepository.DummyItem>>() {
+        articleViewModel.dummyItems().observe(getActivity(), new Observer<List<Article>>() {
             @Override
-            public void onChanged(@Nullable List<DummyArticleRepository.DummyItem> dummyItems) {
+            public void onChanged(@Nullable List<Article> dummyItems) {
                 if (dummyItems != null) {
                     adapter.setArticleList(dummyItems);
                 }
@@ -53,14 +56,14 @@ public class ArticleListFragment extends Fragment {
 
     private ArticleClickListener articleClickListener = new ArticleClickListener() {
         @Override
-        public void onArticleSelected(DummyArticleRepository.DummyItem dummyItem) {
-            articleViewModel.selectItem(dummyItem.id);
+        public void onArticleSelected(Article article) {
+            articleViewModel.selectItem(article.getId());
             articleNavigator.navigateToArticleDetail();
         }
     };
 
     interface ArticleClickListener {
-        void onArticleSelected(DummyArticleRepository.DummyItem dummyItem);
+        void onArticleSelected(Article dummyItem);
     }
 
 }

@@ -17,6 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import xyz.lgvalle.chachi.guardian.Article;
+
 public class ArticleDetailFragment extends Fragment {
     public static final String TAG = ArticleDetailFragment.class.getSimpleName();
 
@@ -63,12 +65,12 @@ public class ArticleDetailFragment extends Fragment {
         final CollapsingToolbarLayout appBarLayout = rootView.findViewById(R.id.toolbar_layout);
 
         ArticleViewModel viewModel = ViewModelProviders.of(getActivity()).get(ArticleViewModel.class);
-        viewModel.getSelectedItem().observe(getActivity(), new Observer<DummyArticleRepository.DummyItem>() {
+        viewModel.getSelectedItem().observe(getActivity(), new Observer<Article>() {
             @Override
-            public void onChanged(@Nullable DummyArticleRepository.DummyItem dummyItem) {
-                if (dummyItem != null) {
-                    appBarLayout.setTitle(dummyItem.content);
-                    ((TextView) rootView.findViewById(R.id.article_detail)).setText(dummyItem.details);
+            public void onChanged(@Nullable Article article) {
+                if (article != null) {
+                    appBarLayout.setTitle(article.getTitle());
+                    ((TextView) rootView.findViewById(R.id.article_detail)).setText(article.getDescription());
                 }
             }
         });

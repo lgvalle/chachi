@@ -4,18 +4,20 @@ package xyz.lgvalle.chachi;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 
+import xyz.lgvalle.chachi.guardian.TheGuardianDataSource;
+
 class ViewModelFactory implements ViewModelProvider.Factory {
 
-    private final DummyArticleRepository dummyArticleRepository;
+    private TheGuardianDataSource dataSource;
 
-    ViewModelFactory(DummyArticleRepository dummyArticleRepository) {
-        this.dummyArticleRepository = dummyArticleRepository;
+    ViewModelFactory(TheGuardianDataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
     @Override
     public <T extends ViewModel> T create(Class<T> modelClass) {
         if (modelClass.isAssignableFrom(ArticleViewModel.class)) {
-            return (T) new ArticleViewModel(dummyArticleRepository);
+            return (T) new ArticleViewModel(dataSource);
         }
         return null;
     }
