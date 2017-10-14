@@ -44,11 +44,11 @@ public class ArticleListFragment extends Fragment {
         ViewModelFactory viewModelFactory = new ViewModelFactory(new TheGuardianDataSource());
         articleViewModel = ViewModelProviders.of(getActivity(), viewModelFactory).get(ArticleViewModel.class);
 
-        articleViewModel.dummyItems().observe(getActivity(), new Observer<List<Article>>() {
+        articleViewModel.articles().observe(getActivity(), new Observer<List<Article>>() {
             @Override
-            public void onChanged(@Nullable List<Article> dummyItems) {
-                if (dummyItems != null) {
-                    adapter.setArticleList(dummyItems);
+            public void onChanged(@Nullable List<Article> articles) {
+                if (articles != null) {
+                    adapter.setArticles(articles);
                 }
             }
         });

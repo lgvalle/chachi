@@ -49,7 +49,7 @@ class SimpleItemRecyclerViewAdapter
         return values.size();
     }
 
-    void setArticleList(List<Article> articleList) {
+    void setArticles(List<Article> articleList) {
         this.values = articleList;
         notifyDataSetChanged();
     }

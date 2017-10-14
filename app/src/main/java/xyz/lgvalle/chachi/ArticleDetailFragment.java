@@ -65,7 +65,7 @@ public class ArticleDetailFragment extends Fragment {
         final CollapsingToolbarLayout appBarLayout = rootView.findViewById(R.id.toolbar_layout);
 
         ArticleViewModel viewModel = ViewModelProviders.of(getActivity()).get(ArticleViewModel.class);
-        viewModel.getSelectedItem().observe(getActivity(), new Observer<Article>() {
+        viewModel.selectedItem().observe(getActivity(), new Observer<Article>() {
             @Override
             public void onChanged(@Nullable Article article) {
                 if (article != null) {

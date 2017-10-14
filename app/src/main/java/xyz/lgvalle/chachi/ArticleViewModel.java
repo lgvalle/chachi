@@ -15,15 +15,13 @@ import xyz.lgvalle.chachi.guardian.TheGuardianDataSource;
 public class ArticleViewModel extends ViewModel {
 
     private static final String TAG = ArticleViewModel.class.getSimpleName();
-    private final LiveData<List<Article>> dummyItems;
+    private final LiveData<List<Article>> articles;
     private LiveData<Article> selectedItem;
-    private TheGuardianDataSource dataSource;
 
     public ArticleViewModel(TheGuardianDataSource dataSource) {
-        this.dataSource = dataSource;
 
         Log.d(TAG, "Create ViewModel");
-        dummyItems = Transformations.map(dataSource.fetch(), new Function<Edition, List<Article>>() {
+        articles = Transformations.map(dataSource.edition(), new Function<Edition, List<Article>>() {
             @Override
             public List<Article> apply(Edition edition) {
                 Log.d(TAG, "Transform Result");
@@ -32,17 +30,27 @@ public class ArticleViewModel extends ViewModel {
         });
     }
 
-    LiveData<List<Article>> dummyItems() {
+    LiveData<List<Article>> articles() {
         Log.d(TAG, "Get dummy items");
-        return dummyItems;
+        return articles;
 
     }
 
-    void selectItem(String itemId) {
-        selectedItem = dataSource.articleById(itemId);
+    void selectItem(final String itemId) {
+        selectedItem = Transformations.map(articles, new Function<List<Article>, Article>() {
+            @Override
+            public Article apply(List<Article> articles) {
+                for (Article article : articles) {
+                    if (article.getId().equals(itemId)) {
+                        return article;
+                    }
+                }
+                return null;
+            }
+        });
     }
 
-    LiveData<Article> getSelectedItem() {
+    LiveData<Article> selectedItem() {
         return selectedItem;
     }
 

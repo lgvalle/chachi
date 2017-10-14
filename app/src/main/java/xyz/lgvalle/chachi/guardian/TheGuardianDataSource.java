@@ -1,9 +1,6 @@
 package xyz.lgvalle.chachi.guardian;
 
-import android.arch.core.util.Function;
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.Transformations;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -22,7 +19,7 @@ public class TheGuardianDataSource {
     private static final String TAG = TheGuardianDataSource.class.getSimpleName();
     private MutableLiveData<Edition> edition = new MutableLiveData<>();
 
-    public MutableLiveData<Edition> fetch() {
+    public MutableLiveData<Edition> edition() {
         Log.d(TAG, "Fetching");
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -44,20 +41,6 @@ public class TheGuardianDataSource {
         return edition;
     }
 
-
-    public LiveData<Article> articleById(final String id) {
-        return Transformations.map(edition, new Function<Edition, Article>() {
-            @Override
-            public Article apply(Edition edition) {
-                for (Article article : edition.getItems()) {
-                    if (article.getId().equals(id)) {
-                        return article;
-                    }
-                }
-                return null;
-            }
-        });
-    }
 
     private Callback<Edition> callback() {
         return new Callback<Edition>() {
