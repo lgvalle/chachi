@@ -2,6 +2,7 @@ package xyz.lgvalle.chachi;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -11,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -75,7 +77,16 @@ public class ArticleDetailFragment extends Fragment {
                     appBarLayout.setTitle(article.getTitle());
                     ImageView articleImageView = rootView.findViewById(R.id.article_image);
                     loadImage(article, articleImageView);
-                    ((TextView) rootView.findViewById(R.id.article_detail)).setText(article.getDescription());
+                    loadContent(article);
+                }
+            }
+
+            private void loadContent(@Nullable Article article) {
+                TextView body = rootView.findViewById(R.id.article_detail);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    body.setText(Html.fromHtml(article.getDescription(), Html.FROM_HTML_MODE_COMPACT));
+                } else {
+                    body.setText(Html.fromHtml(article.getDescription()));
                 }
             }
 
