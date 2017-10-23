@@ -1,9 +1,18 @@
 package xyz.lgvalle.chachi.guardian;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.util.Log;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
+
+import java.util.List;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -19,7 +28,7 @@ public class TheGuardianDataSource {
     private static final String TAG = TheGuardianDataSource.class.getSimpleName();
     private MutableLiveData<Edition> edition = new MutableLiveData<>();
 
-    public MutableLiveData<Edition> edition() {
+    public LiveData<Edition> edition() {
         Log.d(TAG, "Fetching");
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -39,6 +48,34 @@ public class TheGuardianDataSource {
         call.enqueue(callback());
 
         return edition;
+    }
+
+    public LiveData<List<Article>> articles() {
+        Log.d(TAG, "get articles");
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("feed/guardian/items");
+
+
+        final MutableLiveData<List<Article>> articles = new MutableLiveData<>();
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                List<Article> items = dataSnapshot.getValue(new GenericTypeIndicator<List<Article>>() {
+                });
+                Log.d(TAG, "get articles: post value");
+                articles.postValue(items);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+
+        myRef.addListenerForSingleValueEvent(valueEventListener);
+
+        return articles;
     }
 
 

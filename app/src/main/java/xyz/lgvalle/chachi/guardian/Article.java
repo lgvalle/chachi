@@ -1,16 +1,22 @@
 package xyz.lgvalle.chachi.guardian;
 
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
 import java.util.List;
 
+@IgnoreExtraProperties
 public class Article {
 
-    String creator;
-    String date;
-    String description;
-    double score;
-    String title;
-    List<Media> media;
+    public String creator;
+    public String date;
+    public String description;
+    public double score;
+    public String title;
+    public List<Media> media;
+
+    public Article() {
+    }
 
     public String getCreator() {
         return creator;
@@ -52,16 +58,4 @@ public class Article {
     }
 
 
-    public class Media {
-        String credit;
-        String url;
-
-        public String getCredit() {
-            return credit;
-        }
-
-        public String getUrl() {
-            return url;
-        }
-    }
 }

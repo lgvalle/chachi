@@ -21,22 +21,49 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <FrameLayout
+    <LinearLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <include layout="@layout/article_list" />
-    </FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:id="@+id/mood_container"
+            android:orientation="horizontal"
+            android:visibility="gone">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+            <ImageView
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_marginLeft="8dp"
+                android:layout_weight="1"
+                android:src="@drawable/ic_mood_bad_black_24dp" />
+
+            <android.support.v7.widget.AppCompatSeekBar
+                android:id="@+id/mood_seekbar"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_weight="2"
+                android:max="200" />
+
+            <ImageView
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_marginRight="8dp"
+                android:layout_weight="1"
+                android:src="@drawable/ic_mood_black_24dp" />
+
+        </LinearLayout>
+
+
+        <include layout="@layout/article_list" />
+    </LinearLayout>
 
 
 </android.support.design.widget.CoordinatorLayout>

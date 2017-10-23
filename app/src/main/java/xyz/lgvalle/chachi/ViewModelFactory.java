@@ -19,6 +19,9 @@ class ViewModelFactory implements ViewModelProvider.Factory {
         if (modelClass.isAssignableFrom(ArticleViewModel.class)) {
             return (T) new ArticleViewModel(dataSource);
         }
+        if (modelClass.isAssignableFrom(MoodSeekbarViewModel.class)) {
+            return (T) new MoodSeekbarViewModel();
+        }
         return null;
     }
 }

@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 26
@@ -40,7 +41,8 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
     compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
-    //compile 'com.squareup.retrofit2:converter-gson:1.0.0'
+    compile 'com.google.firebase:firebase-database:11.4.2'
+    compile 'com.google.firebase:firebase-firestore:11.4.2'
 
     // Testing-only dependencies
     testCompile 'junit:junit:4.12'
@@ -52,5 +54,11 @@ dependencies {
 
     // Force usage of dependencies in the test app, since it is internally used by the runner module.
     androidTestCompile 'com.android.support:design:' + rootProject.supportLibVersion;
-    androidTestCompile 'com.android.support:recyclerview-v7:' + rootProject.supportLibVersion;
+    androidTestCompile 'com.android.support:recyclerview-v7:' + rootProject.supportLibVersion
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version";
+}
+
+apply plugin: 'com.google.gms.google-services'
+repositories {
+    mavenCentral()
 }
