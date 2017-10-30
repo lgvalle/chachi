@@ -16,9 +16,9 @@ import java.util.List;
 import xyz.lgvalle.chachi.guardian.Article;
 import xyz.lgvalle.chachi.guardian.TheGuardianDataSource;
 
-public class ArticleViewModelCopy extends ViewModel {
+public class ArticleViewModel extends ViewModel {
 
-    private static final String TAG = ArticleViewModelCopy.class.getSimpleName();
+    private static final String TAG = ArticleViewModel.class.getSimpleName();
     private LiveData<List<Article>> articles = new MutableLiveData<>();
     private LiveData<Article> selectedItem;
     private TheGuardianDataSource dataSource;
@@ -26,7 +26,7 @@ public class ArticleViewModelCopy extends ViewModel {
     private DatabaseReference myRef;
     private ValueEventListener valueEventListener;
 
-    public ArticleViewModelCopy(TheGuardianDataSource dataSource) {
+    public ArticleViewModel(TheGuardianDataSource dataSource) {
         this.dataSource = dataSource;
     }
 
